@@ -4,3 +4,6 @@ numpy
 scikit-learn
 xgboost
 joblib
+lightgbm
+matplotlib 
+seaborn
