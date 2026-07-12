@@ -3,30 +3,32 @@ import pandas as pd
 import numpy as np
 import joblib
 
-# 1. 页面基础配置 (必须放在脚本最开始)
+
 st.set_page_config(
     page_title="Cerebral Vasospasm Predictor",
     page_icon="🧠",
     layout="wide",
     initial_sidebar_state="expanded"
 )
+import os
 
-# 2. 加载训练好的模型
-@st.cache_resource # 缓存模型，避免每次点按钮都重新加载
+@st.cache_resource
 def load_model():
-    # 替换为你实际保存的模型路径
-    try:
-        return joblib.load("best_vasospasm_model.pkl")
-    except Exception as e:
-        st.warning("⚠️ 模型文件未找到，当前使用[模拟演示模式]。请确保 'best_vasospasm_model.pkl' 存在。")
+    # 获取 app.py 当前所在的绝对路径
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    model_path = os.path.join(current_dir, "best_vasospasm_model.pkl")
+    
+    if os.path.exists(model_path):
+        return joblib.load(model_path)
+    else:
+        st.error(f"⚠️ 无法在路径 {model_path} 找到模型文件！")
         return None
 
 final_model = load_model()
 
-# 临床决策阈值
+
 CUTOFF_VALUE = 0.50
 
-# 3. 侧边栏：临床信息输入
 st.sidebar.title("📋 Patient Information")
 st.sidebar.markdown("Please enter clinical and surgical data.")
 
@@ -38,12 +40,11 @@ treatment_group = st.sidebar.selectbox("Treatment Group", ["Clipping", "Coiling"
 # 预测按钮
 predict_clicked = st.sidebar.button("🚀 Start Prediction", use_container_width=True, type="primary")
 
-# 4. 主页面：标题与说明
 st.title("🎯 Cerebral Vasospasm Risk Predictor")
 st.markdown("<p style='color: gray; font-size: 16px;'>Machine Learning-based Delayed Cerebral Vasospasm Prediction | Optimized & Calibrated Framework</p>", unsafe_allow_html=True)
 st.divider()
 
-# 5. 后端推理与前端渲染逻辑
+
 if predict_clicked:
     # 组装输入数据框 (列名必须与训练时 preprocessor 的要求严格一致)
     input_df = pd.DataFrame({
@@ -120,7 +121,7 @@ else:
     # 初始状态下的占位符
     st.info("👈 Please enter patient information in the sidebar and click **Start Prediction**.")
 
-# 6. 页脚
+
 st.markdown("""
 ---
 <div style="text-align: center; color: gray; font-size: 14px;">
