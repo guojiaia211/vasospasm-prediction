@@ -36,7 +36,7 @@ age = st.sidebar.number_input("Age (years)", min_value=18, max_value=100, value=
 bicarbonate_min = st.sidebar.number_input("Bicarbonate Min (mmol/L)", min_value=10.0, max_value=45.0, value=21.0, step=0.1, format="%.1f")
 
 chloride_min = st.sidebar.number_input("Chloride Min (mmol/L)", min_value=70, max_value=130, value=102, step=1)
-treatment_group = st.sidebar.selectbox("Treatment Group", ["Clipping", "Coiling", "EVD Only", "Other"], index=1)
+treatment_group = st.sidebar.selectbox("Treatment Group", ["Clipping", "Coiling", "EVD Only"], index=1)
 
 predict_clicked = st.sidebar.button("🚀 Start Prediction", use_container_width=True, type="primary")
 
