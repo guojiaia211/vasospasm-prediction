@@ -27,7 +27,7 @@ def load_model():
 final_model = load_model()
 
 # 3. 界面逻辑
-CUTOFF_VALUE = 0.50
+CUTOFF_VALUE = 0.40
 
 st.sidebar.title("📋 Patient Information")
 age = st.sidebar.number_input("Age (years)", min_value=18, max_value=100, value=55, step=1)
